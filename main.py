@@ -16,8 +16,11 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 cx=0
 cy=0
 
-pen = render.RenderPen()
-tile_map = tiles.TileGrid()
+with open('assets/map1.json') as json_file:
+    data = json.load(json_file)
+print(data)
+#pen = render.RenderPen()
+tile_map = tiles.TileGrid(data)
 
 while(True):
     for event in pygame.event.get():
@@ -26,7 +29,7 @@ while(True):
             sys.exit()
 
     tile_state = tile_map.get_pos(cx,cy)
-    pen.draw()
+    # pen.draw()
 
     screen.fill("#ffffff")
     pygame.display.flip()

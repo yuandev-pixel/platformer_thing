@@ -4,9 +4,10 @@ class TileGrid:
         self.cx=0
         self.cy=0
     def move(self,x:float,y:float) -> None:
-        for tile in self.start_pos:
-            tile.x+=x
-            tile.y+=y
+        for tile in self.start_pos.items():
+            print(tile)
+            tile[1]["x"]+=x
+            tile[1]["y"]+=y
     def get_pos(self,cx,cy) -> dict:
-        self.move(cx-self.x,cy-self.y)
+        self.move(cx-self.cx,cy-self.cy)
         return self.start_pos
