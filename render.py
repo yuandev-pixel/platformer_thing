@@ -7,4 +7,5 @@ class RenderPen:
         if type == "block":
             for block in data.values():
                 # print(block)
-                self.screen.blit(pygame.transform.scale(pygame.image.load("./assets/tiles/sprite_"+block["type"]+".png"),(16,16)),(block["x"]*16,block["y"]*16))
+                if int(block["type"]) > -1:
+                    self.screen.blit(pygame.transform.scale(pygame.image.load("./assets/tiles/sprite_"+block["type"]+".png"),(16,16)),(block["x"]*16,block["y"]*16))
