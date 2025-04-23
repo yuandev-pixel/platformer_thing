@@ -39,6 +39,8 @@ pen = render.RenderPen(screen)
 tile_map = tiles.TileGrid(test)
 
 while(True):
+    delta = 60/(clock.get_fps()+0.000000000000000000000000000000000000000001)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -47,20 +49,21 @@ while(True):
     key = pygame.key.get_pressed()
     pcx=cx
     pcy=cy
-    cx += (tcx - cx)*0.3
+    cx += (tcx - cx)*0.3*delta
     # print(key[pygame.K_a])
     # print(cx)
     if(key[pygame.K_a]):
         tcx -= 5
-
-    tile_state = tile_map.get_pos(cx,cy)
+    if(key[pygame.K_d]):
+        tcx += 5
     # print(pcx)
     # print(cx)
     if(round(pcx) != round(cx) or round(pcy) != round(cy) or clock.get_time()<10):
+        tile_state = tile_map.get_pos(cx,cy)
         screen.fill("#21263f")
         pen.draw("block",tile_state)
     
     print(clock.get_fps())
     pygame.display.flip()
     pygame.display.update()
-    clock.tick(60)
+    clock.tick()
