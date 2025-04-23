@@ -18,6 +18,8 @@ test_tag = pygame.SCALED|pygame.RESIZABLE
 screen = pygame.display.set_mode(SCREEN_SIZE,flags = test_tag)
 cx=0
 cy=0
+tcx=0
+tcy=0
 
 with open('assets/map1.json') as json_file:
     data = json.load(json_file)
@@ -39,6 +41,13 @@ while(True):
             pygame.quit()
             sys.exit()
 
+    key = pygame.key.get_pressed()
+    cx += (tcx - cx)*0.3
+    # print(key[pygame.K_a])
+    # print(cx)
+    if(key[pygame.K_a]):
+        tcx -= 5
+    
     screen.fill("#21263f")
 
     tile_state = tile_map.get_pos(cx,cy)

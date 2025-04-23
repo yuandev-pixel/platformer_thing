@@ -9,5 +9,7 @@ class TileGrid:
             tile[1]["x"]+=x
             tile[1]["y"]+=y
     def get_pos(self,cx,cy) -> dict:
-        self.move(cx-self.cx,cy-self.cy)
+        self.move(self.cx-cx,cy-self.cy)
+        self.cx = cx
+        self.cy = cy
         return self.start_pos
