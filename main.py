@@ -23,6 +23,7 @@ tcx=0
 tcy=0
 pcx=1
 pcy=1
+player = entity.Entity(0,0,)
 
 with open('assets/map1.json') as json_file:
     data = json.load(json_file)
