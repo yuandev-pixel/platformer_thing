@@ -13,3 +13,4 @@ class RenderPen:
                 if int(block["type"]) > -1:
                     print(int(block["type"]))
                     self.screen.blit(self.tiles[int(block["type"])],(block["x"]*16,block["y"]*16))
+
