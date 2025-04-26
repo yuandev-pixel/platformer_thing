@@ -23,7 +23,11 @@ tcx=0
 tcy=0
 pcx=1
 pcy=1
-player = entity.Entity(0,0,)
+
+player_frames = []
+#TODO: add the for loop that loops th dir with player animations
+
+player = entity.AnimatedEntity(0, 0, player_frames,pygame.rect.Rect(0,0,50,50) ,4)
 
 with open('assets/map1.json') as json_file:
     data = json.load(json_file)
