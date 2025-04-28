@@ -26,24 +26,24 @@ tcy=0
 pcx=1
 pcy=1
 
-player_frames = [pygame.image.load(join("./assets/entitys/player/idle/",f)) for f in listdir("./assets/entitys/player/idle") if isfile(join("./assets/entitys/player/idle",f))]
+player_frames = [pygame.transform.scale(pygame.image.load(join("./assets/entitys/player/idle/",f)),(32,64)) for f in listdir("./assets/entitys/player/idle") if isfile(join("./assets/entitys/player/idle",f))]
 print(player_frames)
 
 player = entity.AnimatedEntity(0, 0, player_frames,pygame.rect.Rect(0,0,50,50) ,4)
 
 with open('assets/map1.json') as json_file:
     data = json.load(json_file)
-test = {}
-for i in range(75):
-    for j in range(50):
-        test[str(i*75+j)]={
-        "type":str(random.randint(-1,92)),
-        "x":i,
-        "y":j
-    }
+# test = {}
+# for i in range(75):
+#     for j in range(50):
+#         test[str(i*75+j)]={
+#         "type":str(random.randint(-1,92)),
+#         "x":i,
+#         "y":j
+#     }
 # print(test)
 pen = render.RenderPen(screen)
-tile_map = tiles.TileGrid(test)
+tile_map = tiles.TileGrid(data)
 
 while(True):
     delta = 60/(clock.get_fps()+0.000000000000000000000000000000000000000001)
@@ -57,12 +57,17 @@ while(True):
     pcx=cx
     pcy=cy
     cx += (tcx - cx)*0.3*delta
+    cy += (tcy - cy)*0.3*delta
     # print(key[pygame.K_a])
     # print(cx)
     if(key[pygame.K_a]):
         tcx -= 5
     if(key[pygame.K_d]):
         tcx += 5
+    if(key[pygame.K_s]):
+        tcy -= 5
+    if(key[pygame.K_w]):
+        tcy += 5
     # print(pcx)
     # print(cx)
     if(round(pcx) != round(cx) or round(pcy) != round(cy) or clock.get_time()<10):
@@ -71,6 +76,7 @@ while(True):
         pen.draw("block",tile_state)
     
     player.update(0,0,screen)
+
     print(clock.get_fps())
     pygame.display.flip()
     pygame.display.update()
