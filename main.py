@@ -7,6 +7,8 @@ import enemy
 import render
 import json
 import random
+from os import listdir
+from os.path import isfile, join
 
 pygame.init()
 
@@ -24,8 +26,8 @@ tcy=0
 pcx=1
 pcy=1
 
-player_frames = []
-#TODO: add the for loop that loops th dir with player animations
+player_frames = [pygame.image.load(join("./assets/entitys/player/idle/",f)) for f in listdir("./assets/entitys/player/idle") if isfile(join("./assets/entitys/player/idle",f))]
+print(player_frames)
 
 player = entity.AnimatedEntity(0, 0, player_frames,pygame.rect.Rect(0,0,50,50) ,4)
 
@@ -68,7 +70,9 @@ while(True):
         screen.fill("#21263f")
         pen.draw("block",tile_state)
     
+    player.update(0,0,screen)
     print(clock.get_fps())
     pygame.display.flip()
     pygame.display.update()
     clock.tick()
+
