@@ -3,5 +3,7 @@
         "blit",
         "hitbox",
         "tclock"
-    ]
+    ],
+    "editor.fontFamily": "FiraCode Nerd Font Mono",
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono"
 }
