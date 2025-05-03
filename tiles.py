@@ -27,9 +27,9 @@ class FakeGrid:
         self.sx = 0
         self.sy = 0
 
-    def shift(self, x: int, y: int) -> tuple:
+    def shift(self, x: float, y: float) -> tuple:
         self.sx = x
         self.sy = y
 
     def in_block(self, x: int, y: int) -> tuple[int, int]:
-        return (x - self.sx) / 16, (y - self.sy) / 16
+        return (x - self.sx) // 16, (y - self.sy) // 16

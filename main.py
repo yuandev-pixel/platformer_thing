@@ -44,6 +44,8 @@ player = entity.AnimatedEntity(
     4,
 )
 
+select_tile = pygame.image.load("./assets/tiles/select.png")
+
 with open("assets/map1.json") as json_file:
     data = json.load(json_file)
 # test = {}
@@ -84,11 +86,16 @@ while True:
         tcy += 5
     # print(pcx)
     # print(cx)
+    mouse_pos = pygame.mouse.get_pos()
+    screen.fill("#21263f")
     if round(pcx) != round(cx) or round(pcy) != round(cy) or clock.get_time() < 10:
         tile_state = tile_map.get_pos(cx, cy)
         a_fake.shift(cx, cy)
-        screen.fill("#21263f")
         pen.draw("block", tile_state)
+
+    print(a_fake.in_block(mouse_pos[0], mouse_pos[1]))
+    mouse_tile_pos = (a_fake.in_block(mouse_pos[0], mouse_pos[1])[0]*16, a_fake.in_block(mouse_pos[0], mouse_pos[1])[1]*16)
+    screen.blit(pygame.transform.scale(select_tile,(16,16)).convert_alpha(),mouse_tile_pos)
 
     player.update(SCREEN_CENTER[0] - 24, SCREEN_CENTER[1] - 48, screen)
 

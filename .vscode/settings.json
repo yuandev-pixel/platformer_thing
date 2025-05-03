@@ -4,6 +4,12 @@
         "hitbox",
         "tclock"
     ],
-    "editor.fontFamily": "FiraCode Nerd Font Mono",
-    "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono"
+    "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "markdown.preview.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "scm.inputFontFamily": "JetBrainsMono Nerd Font Mono",
+    "notebook.output.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "notebook.markup.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "debug.console.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "editor.inlineSuggest.fontFamily": "JetBrainsMono Nerd Font Mono"
 }
