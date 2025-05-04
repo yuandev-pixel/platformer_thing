@@ -21,7 +21,7 @@ class AnimatedEntity:
         self.tclock = interval - 1
         self.length = len(image)
 
-    def update(self,x:int,y:int,screen:pygame.surface) -> None:
+    def update(self,x:int,y:int) -> None:
         self.x = x
         self.y = y
         self.tclock += 1
@@ -30,7 +30,6 @@ class AnimatedEntity:
             self.frame += 1
             if self.frame >= self.length:
                 self.frame = 0
-            self.draw(screen)
 
     def draw(self, screen:pygame.Surface) -> None:
         screen.blit(self.image[self.frame], (self.x, self.y))
