@@ -77,13 +77,13 @@ while True:
     cx += (tcx - cx) * 0.3 * delta
     cy += (tcy - cy) * 0.3 * delta
     if key[pygame.K_a]:
-        tcx -= 5
+        tcx -= 1
     if key[pygame.K_d]:
-        tcx += 5
+        tcx += 1
     if key[pygame.K_s]:
-        tcy -= 5
+        tcy += 1
     if key[pygame.K_w]:
-        tcy += 5
+        tcy -= 1
 
     #更新角色
     player_idle.update(SCREEN_CENTER[0] - 24, SCREEN_CENTER[1] - 48)
@@ -93,8 +93,10 @@ while True:
 
     #选择格子
     mouse_pos = pygame.mouse.get_pos()
-    a_fake.shift(cx, cy)
-    mouse_tile_pos = (a_fake.in_block(mouse_pos[0], mouse_pos[1])[0]*16, a_fake.in_block(mouse_pos[0], mouse_pos[1])[1]*16)
+    a_fake.shift(-cx, -cy)
+    mouse_tile_pos = a_fake.in_block(mouse_pos[0], mouse_pos[1])[0]*16 , a_fake.in_block(mouse_pos[0], mouse_pos[1])[1]*16 
+
+    print(a_fake.sx,cx,a_fake.sy,cy)
 
     #绘制部分
 
