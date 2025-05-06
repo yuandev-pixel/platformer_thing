@@ -32,4 +32,4 @@ class FakeGrid:
         self.sy = y
 
     def in_block(self, x: int, y: int) -> tuple[int, int]:
-        return round((x + self.sx) // 16), round((y + self.sy) // 16)
+        return round(x // 16 - self.sx // 16), round(y // 16 - self.sy // 16)

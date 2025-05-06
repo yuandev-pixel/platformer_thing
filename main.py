@@ -94,9 +94,9 @@ while True:
     #选择格子
     mouse_pos = pygame.mouse.get_pos()
     a_fake.shift(-cx, -cy)
-    mouse_tile_pos = a_fake.in_block(mouse_pos[0], mouse_pos[1])[0]*16 , a_fake.in_block(mouse_pos[0], mouse_pos[1])[1]*16 
+    mouse_tile_pos = (a_fake.in_block(mouse_pos[0], mouse_pos[1])[0] * 16 - cx, a_fake.in_block(mouse_pos[0], mouse_pos[1])[1] * 16 - cy)
 
-    print(a_fake.sx,cx,a_fake.sy,cy)
+    print( a_fake.in_block(mouse_pos[0], mouse_pos[1]))
 
     #绘制部分
 
