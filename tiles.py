@@ -8,11 +8,11 @@ class TileGrid:
     def move(self, x: float, y: float) -> None:
         for tile in self.start_pos.items():
             # print(tile)
-            tile[1]["x"] += x
+            tile[1]["x"] -= x
             tile[1]["y"] -= y
 
     def get_pos(self, cx, cy) -> dict:
-        self.move(self.cx - cx, cy - self.cy)
+        self.move(cx - self.cx, cy - self.cy)
         self.cx = cx
         self.cy = cy
         return self.start_pos
@@ -32,4 +32,5 @@ class FakeGrid:
         self.sy = y
 
     def in_block(self, x: int, y: int) -> tuple[int, int]:
-        return round(x // 16 - self.sx // 16), round(y // 16 - self.sy // 16)
+        print(self.sx,"hello inblock")
+        return round((x + self.sx*16) / 32), round((y) / 16)
