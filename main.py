@@ -20,8 +20,8 @@ full_tag = pygame.FULLSCREEN | pygame.SCALED | pygame.DOUBLEBUF | pygame.HWSURFA
 test_tag = pygame.SCALED | pygame.RESIZABLE | pygame.DOUBLEBUF | pygame.HWSURFACE
 screen = pygame.display.set_mode(SCREEN_SIZE, flags=test_tag, vsync = 1)
 clock = pygame.time.Clock()
-camera_x = 1
-camera_y = 1
+camera_x = 0
+camera_y = 0
 target_camera_x = 0
 target_camera_y = 0
 previous_camera_x = 1
@@ -36,8 +36,8 @@ player_idle_frames = [
 ]
 
 player_idle = entity.AnimatedEntity(
-    SCREEN_WIDTH / 2 - 16,
-    SCREEN_WIDTH / 2 - 32,
+    round(SCREEN_WIDTH / 2) - 16,
+    round(SCREEN_WIDTH / 2) - 32,
     player_idle_frames,
     pygame.rect.Rect(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, 32, 64),
     4,
@@ -55,7 +55,7 @@ test = {}
 for i in range(75):
     for j in range(50):
         test[str(i*75+j)]={
-        "type":str(10),
+        "type":str(-2),
         "x":i,
         "y":j
     }
@@ -83,16 +83,16 @@ while True:
     #移动逻辑
     key = pygame.key.get_pressed()
     if key[pygame.K_a]:
-        camera_x -= round(1 * delta)
+        camera_x -= round(0.5 * delta)
     if key[pygame.K_d]:
-        camera_x += round(1 * delta)
+        camera_x += round(0.5 * delta)
     if key[pygame.K_s]:
-        camera_y += round(1 * delta)
+        camera_y += round(0.5 * delta)
     if key[pygame.K_w]:
-        camera_y -= round(1 * delta)
+        camera_y -= round(0.5 * delta)
 
     #更新角色
-    player_idle.update(SCREEN_CENTER[0] - 24, SCREEN_CENTER[1] - 48)
+    player_idle.update(round(SCREEN_CENTER[0]) - 24, round(SCREEN_CENTER[1]) - 48)
 
     #格子逻辑
     tile_state = tile_map.get_pos(camera_x, camera_y)
@@ -101,6 +101,9 @@ while True:
     mouse_pos = pygame.mouse.get_pos()
     a_fake.shift(-camera_x, -camera_y)
     mouse_tile_pos = mouse_pos[0]//16*16, mouse_pos[1]//16*16
+    real_mouse_tile_pos = mouse_tile_pos[0]/16 + camera_x, mouse_tile_pos[1]/16 + camera_y
+    print(real_mouse_tile_pos)
+    print(camera_x,camera_y)
 
     #绘制部分
 
