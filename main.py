@@ -48,13 +48,9 @@ select_tile = pygame.image.load("./assets/tiles/select.png")
 select_tile = pygame.transform.scale(select_tile,(16,16)).convert_alpha()
 dirty_select_tile = select_tile
 
-preview_tile = [
-    pygame.transform.scale(
-        pygame.image.load(join("./assets/tiles/", f)), (16, 16)
-    )
-    for f in listdir("./assets/tiles")
-    if isfile(join("./assets/tiles", f))
-]
+preview_tile = []
+for i in range(-2,93):
+    preview_tile.append(pygame.transform.scale(pygame.image.load("./assets/tiles/sprite_"+str(i)+".png"),(16,16)))
 the_tile = 0
 
 with open("assets/map1.json") as json_file:
@@ -129,7 +125,7 @@ while True:
     pen.draw("block", tile_state)
 
     #绘制preview
-    pen.draw("preview", {"preview":preview_tile[the_tile]})
+    pen.draw("preview", {"preview":preview_tile[the_tile],"pos":mouse_tile_pos})
 
     #绘制选择
     screen.blit(select_tile,mouse_tile_pos)

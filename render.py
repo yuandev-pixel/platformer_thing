@@ -12,3 +12,5 @@ class RenderPen:
                 # print(block)
                 if int(block["type"]) != -1:
                     self.screen.blit(self.tiles[int(block["type"])],(block["x"]*16,block["y"]*16))
+        if type == "preview":
+            self.screen.blit(data["preview"],data["pos"])
