@@ -48,6 +48,8 @@ select_tile = pygame.image.load("./assets/tiles/select.png")
 select_tile = pygame.transform.scale(select_tile,(16,16)).convert_alpha()
 dirty_select_tile = select_tile
 
+preview_tile = []
+
 with open("assets/map1.json") as json_file:
     data = json.load(json_file)
 
@@ -104,6 +106,15 @@ while True:
     real_mouse_tile_pos = mouse_tile_pos[0]/16 + camera_x, mouse_tile_pos[1]/16 + camera_y
     print(real_mouse_tile_pos)
     print(camera_x,camera_y)
+
+    #做关卡
+    if  pygame.mouse.get_pressed()[0]:
+        test[str(real_mouse_tile_pos[0]*75+real_mouse_tile_pos[1])]={
+        "type":str(2),
+        "x":real_mouse_tile_pos[0],
+        "y":real_mouse_tile_pos[1]
+        }
+        tile_map.reload(test)
 
     #绘制部分
 

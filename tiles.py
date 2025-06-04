@@ -27,7 +27,7 @@ class FakeGrid:
         self.sx = 0
         self.sy = 0
 
-    def shift(self, x: float, y: float) -> tuple:
+    def shift(self, x: float, y: float):
         self.sx = x
         self.sy = y
 
