@@ -36,10 +36,10 @@ player_idle_frames = [
 ]
 
 player_idle = entity.AnimatedEntity(
-    round(SCREEN_WIDTH / 2) - 16,
-    round(SCREEN_WIDTH / 2) - 32,
+    round(SCREEN_WIDTH / 2) - 12,
+    round(SCREEN_WIDTH / 2) - 24,
     player_idle_frames,
-    pygame.rect.Rect(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, 32, 64),
+    pygame.rect.Rect(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, 24, 48),
     4,
 )
 dirty_player_idle = player_idle
@@ -51,23 +51,16 @@ dirty_select_tile = select_tile
 preview_tile = []
 for i in range(-2,93):
     preview_tile.append(pygame.transform.scale(pygame.image.load("./assets/tiles/sprite_"+str(i)+".png"),(16,16)))
-the_tile = 0
+the_tile = 2
 
 with open("assets/map1.json") as json_file:
     data = json.load(json_file)
 
-test = {}
-for i in range(75):
-    for j in range(50):
-        test[str(i*75+j)]={
-        "type":str(-2),
-        "x":i,
-        "y":j
-    }
-
 pen = render.RenderPen(screen)
-tile_map = tiles.TileGrid(test)
+tile_map = tiles.TileGrid(data)
 a_fake = tiles.FakeGrid()
+
+lt = 0
 
 while True:
     #清空屏幕
@@ -95,6 +88,30 @@ while True:
         camera_y += round(0.5 * delta)
     if key[pygame.K_w]:
         camera_y -= round(0.5 * delta)
+    if lt==5:
+        if key[pygame.K_DOWN]:
+            the_tile += 8
+            if the_tile>92:
+                the_tile-=8
+            lt = 0
+        if key[pygame.K_UP]:
+            the_tile -= 8
+            if the_tile<0:
+                the_tile+=8
+            lt = 0
+        if key[pygame.K_LEFT]:
+            if the_tile%8==0:
+                the_tile+=1
+            the_tile -= 1
+            lt = 0
+        if key[pygame.K_RIGHT]:
+            if the_tile%8==7:
+                the_tile-=1
+            the_tile += 1
+            lt = 0
+    else:
+        if lt<5:
+            lt+=1
 
     #更新角色
     player_idle.update(round(SCREEN_CENTER[0]) - 24, round(SCREEN_CENTER[1]) - 48)
@@ -112,21 +129,21 @@ while True:
 
     #做关卡
     if  pygame.mouse.get_pressed()[0]:
-        test[str(real_mouse_tile_pos[0]*75+real_mouse_tile_pos[1])]={
-        "type":str(2),
-        "x":real_mouse_tile_pos[0],
-        "y":real_mouse_tile_pos[1]
+        data[str(real_mouse_tile_pos[0]*75)+str(real_mouse_tile_pos[1])]={
+        "type":str(the_tile),
+        "x":real_mouse_tile_pos[0]-camera_x,
+        "y":real_mouse_tile_pos[1]-camera_y
         }
-        tile_map.reload(test)
+        tile_map.reload(data)
 
     #绘制部分
 
     #绘制格子
     pen.draw("block", tile_state)
-
+    
     #绘制preview
-    pen.draw("preview", {"preview":preview_tile[the_tile],"pos":mouse_tile_pos})
-
+    pen.draw("preview", {"preview":preview_tile[the_tile+2],"pos":mouse_tile_pos})
+    
     #绘制选择
     screen.blit(select_tile,mouse_tile_pos)
 
