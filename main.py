@@ -47,6 +47,7 @@ dirty_player_idle = player_idle
 select_tile = pygame.image.load("./assets/tiles/select.png")
 select_tile = pygame.transform.scale(select_tile,(16,16)).convert_alpha()
 dirty_select_tile = select_tile
+real_mouse_tile_pos=(0,0)
 
 preview_tile = []
 for i in range(-2,96):
@@ -88,6 +89,11 @@ while True:
         camera_y += math.ceil(0.1 * delta)
     if key[pygame.K_w]:
         camera_y -= math.ceil(0.1 * delta)
+    if key[pygame.K_e]:
+        try:
+            the_tile = data[str(real_mouse_tile_pos[0]*75)+"."+str(real_mouse_tile_pos[1])]["type"]
+        except:
+            the_tile = 0
     if (key[pygame.K_LSHIFT] or key[pygame.K_RSHIFT]) and key[pygame.K_s]:
         with open(input("file name:"),mode="w+") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
