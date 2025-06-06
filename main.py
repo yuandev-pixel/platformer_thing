@@ -6,7 +6,7 @@ import entity
 import enemy
 import render
 import json
-import random
+import math
 from os import listdir
 from os.path import isfile, join
 
@@ -29,7 +29,7 @@ previous_camera_y = 1
 
 player_idle_frames = [
     pygame.transform.scale(
-        pygame.image.load(join("./assets/entitys/player/idle/", f)), (32, 64)
+        pygame.image.load(join("./assets/entitys/player/idle/", f)), (24, 48)
     )
     for f in listdir("./assets/entitys/player/idle")
     if isfile(join("./assets/entitys/player/idle", f))
@@ -49,7 +49,7 @@ select_tile = pygame.transform.scale(select_tile,(16,16)).convert_alpha()
 dirty_select_tile = select_tile
 
 preview_tile = []
-for i in range(-2,93):
+for i in range(-2,96):
     preview_tile.append(pygame.transform.scale(pygame.image.load("./assets/tiles/sprite_"+str(i)+".png"),(16,16)))
 the_tile = 2
 
@@ -81,13 +81,17 @@ while True:
     #移动逻辑
     key = pygame.key.get_pressed()
     if key[pygame.K_a]:
-        camera_x -= round(0.5 * delta)
+        camera_x -= math.ceil(0.1 * delta)
     if key[pygame.K_d]:
-        camera_x += round(0.5 * delta)
+        camera_x += math.ceil(0.1 * delta)
     if key[pygame.K_s]:
-        camera_y += round(0.5 * delta)
+        camera_y += math.ceil(0.1 * delta)
     if key[pygame.K_w]:
-        camera_y -= round(0.5 * delta)
+        camera_y -= math.ceil(0.1 * delta)
+    if (key[pygame.K_LSHIFT] or key[pygame.K_RSHIFT]) and key[pygame.K_s]:
+        with open(input("file name:"),mode="w+") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+
     if lt==5:
         if key[pygame.K_DOWN]:
             the_tile += 8
@@ -109,6 +113,7 @@ while True:
                 the_tile-=1
             the_tile += 1
             lt = 0
+        print(the_tile)
     else:
         if lt<5:
             lt+=1
@@ -129,7 +134,7 @@ while True:
 
     #做关卡
     if  pygame.mouse.get_pressed()[0]:
-        data[str(real_mouse_tile_pos[0]*75)+str(real_mouse_tile_pos[1])]={
+        data[str(real_mouse_tile_pos[0]*75)+"."+str(real_mouse_tile_pos[1])]={
         "type":str(the_tile),
         "x":real_mouse_tile_pos[0]-camera_x,
         "y":real_mouse_tile_pos[1]-camera_y
