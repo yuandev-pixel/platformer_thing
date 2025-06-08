@@ -26,6 +26,7 @@ screen = pygame.display.set_mode(SCREEN_SIZE, flags=test_tag, vsync = 1)
 clock = pygame.time.Clock()
 camera_x = 0
 camera_y = 0
+cya = 0
 target_camera_x = 0
 target_camera_y = 0
 previous_camera_x = 1
@@ -58,13 +59,25 @@ for i in range(-2,96):
 the_tile = 2
 
 with open("assets/map1.json") as json_file:
-    data = json.load(json_file)
+    try:
+        data = json.load(json_file)
+        map_data = data["map"]
+        player_data = data["other"]
+    except:
+        data = {"map":{},"other":{"cx":0,"cy":0}}
+        map_data = data["map"]
+        player_data = data["other"]
 
 pen = render.RenderPen(screen)
-tile_map = tiles.TileGrid(data)
+tile_map = tiles.TileGrid(map_data)
 a_fake = tiles.FakeGrid()
 
+tile_map.cx += player_data["cx"]
+tile_map.cy += player_data["cy"]
+
 lt = 0
+
+edit = True
 
 while True:
     #清空屏幕
@@ -88,13 +101,19 @@ while True:
         camera_x -= math.ceil(0.1 * delta)
     if key[pygame.K_d]:
         camera_x += math.ceil(0.1 * delta)
-    if key[pygame.K_s]:
+    if key[pygame.K_s] and edit:
         camera_y += math.ceil(0.1 * delta)
     if key[pygame.K_w]:
-        camera_y -= math.ceil(0.1 * delta)
+        if edit:
+            camera_y -= math.ceil(0.1 * delta)
+        else:
+            cya=-1
     if (key[pygame.K_LSHIFT] or key[pygame.K_RSHIFT]) and key[pygame.K_s]:
-        with open(input("file name:"),mode="w+") as f:
+        with open(join("./assets/",input("file name:")),mode="w+") as f:
+            data={"map":map_data,"other":{"cx":camera_x,"cy":camera_y}}
             json.dump(data, f, ensure_ascii=False, indent=4)
+    if (key[pygame.K_LSHIFT] or key[pygame.K_RSHIFT]) and key[pygame.K_e]:
+        edit = not edit
 
     if lt==5:
         if key[pygame.K_DOWN]:
@@ -121,6 +140,12 @@ while True:
     else:
         if lt<5:
             lt+=1
+    
+    if not edit:
+        camera_y+=cya
+        cya+=0.05
+        
+    print(edit)
 
     #更新角色
     player_idle.update(round(SCREEN_CENTER[0]) - 24, round(SCREEN_CENTER[1]) - 48)
@@ -138,12 +163,12 @@ while True:
 
     #做关卡
     if  pygame.mouse.get_pressed()[0]:
-        data[str(real_mouse_tile_pos[0]*75)+"."+str(real_mouse_tile_pos[1])]={
+        map_data[str(real_mouse_tile_pos[0]*75)+"."+str(real_mouse_tile_pos[1])]={
         "type":str(the_tile),
         "x":real_mouse_tile_pos[0]-camera_x,
         "y":real_mouse_tile_pos[1]-camera_y
         }
-        tile_map.reload(data)
+        tile_map.reload(map_data)
 
     #绘制部分
 
