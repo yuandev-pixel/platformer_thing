@@ -79,6 +79,10 @@ lt = 0
 
 edit = True
 
+hit_boxes = {
+    "full":pygame.Rect(0,0,16,16)
+}
+
 while True:
     #清空屏幕
 
@@ -129,7 +133,7 @@ while True:
         if key[pygame.K_LEFT]:
             if the_tile%8==0:
                 the_tile+=1
-            the_tile -= 1
+            the_tile -= 3
             lt = 0
         if key[pygame.K_RIGHT]:
             if the_tile%8==7:
